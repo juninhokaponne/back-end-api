@@ -1,0 +1,9 @@
+GET http://localhost:3333/apiv2/user  HTTP/1.1
+
+POST http://localhost:3333/user HTTP/1.1
+Content-Type: application/json
+
+{ 
+"email": "teste@test.com",
+"password": "12345678"
+}

@@ -1,5 +1,5 @@
 const User = require('../Model/UsersModel');
-const bcrypt = require('bcrypt');
+
 
 class HttpExecption extends Error {
     message;
@@ -32,13 +32,12 @@ module.exports = {
         }
 
         const { email, password } = req.body;
-        const hash = await bcrypt.hash(password, 10);
-
+        
         try {
             validadeUserFields(email, password);
             await User.create({
                 email,
-                password: hash,
+                password
             });
             
             res.status(201).send({
@@ -52,5 +51,17 @@ module.exports = {
                 return res.status(500).json(error);
             }
         }
+    },
+
+    async listAllUsers (req, res){
+
+        const users = await User.findAll({
+            attributes: ['id', 'email', 'isAdmin'] 
+            
+        });
+
+        res.status(200).send({
+            users
+        });
     }
 }
